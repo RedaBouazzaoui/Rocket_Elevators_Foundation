@@ -245,11 +245,7 @@ ActiveAdmin.setup do |config|
       end
     end
 
-    config.namespace :admin do |admin|
-      admin.build_menu :default do |menu|
-        menu.add label: "Intervention ", url: "", html_options: { target: :blank }
-      end
-    end
+    
 
     config.namespace :admin do |admin|
       admin.build_menu :default do |menu|
