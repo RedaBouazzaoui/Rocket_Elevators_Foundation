@@ -12,7 +12,7 @@ module SendSms
 
             from = ENV["TWILIO_PHONE_NUMBER"] # Your Twilio number
 
-            to = '+15145037764' # Your mobile phone number
+            to = '+15149912026' # Your mobile phone number
 
 
             client.messages.create(

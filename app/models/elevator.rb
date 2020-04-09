@@ -7,22 +7,22 @@ class Elevator < ApplicationRecord
     after_update :send_sms, if: :intervention?
    
     
-    before_update :slack_notifier
+    # before_update :slack_notifier
 
-    def slack_notifier
-        if self.status_changed?
-          require 'date'
-          current_time = DateTime.now.strftime("%d-%m-%Y %H:%M")
-          notifier = Slack::Notifier.new "https://hooks.slack.com/services/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" do
-            defaults channel: "#elevator_operations"
-          end
-          notifier.ping "The Elevator #{self.id} with Serial Number #{self.serial_number} changed status from #{self.status_was} to #{self.status} at #{current_time}."
-    end
+    # def slack_notifier
+    #     if self.status_changed?
+    #       require 'date'
+    #       current_time = DateTime.now.strftime("%d-%m-%Y %H:%M")
+    #       notifier = Slack::Notifier.new "https://hooks.slack.com/services/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" do
+    #         defaults channel: "#elevator_operations"
+    #       end
+    #       notifier.ping "The Elevator #{self.id} with Serial Number #{self.serial_number} changed status from #{self.status_was} to #{self.status} at #{current_time}."
+    # end
          
     
     
         
-    end
+    # end
     
 
     def send_sms()

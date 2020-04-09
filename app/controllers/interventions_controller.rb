@@ -121,14 +121,14 @@ class InterventionsController < ApplicationController
       # Create a personalized ticket 
       ZendeskAPI::Ticket.create!(@client, 
         :subject => "Intervention ticket from employee ##{@intervention.author} - #{author_firstname} #{author_lastname} - Rocket Elevators",
-        :requester => {"name": "reda.bouazaoui10@gmail.com"},
+        :requester => {"name": @current_employee.email},
         :comment => { :value => "Employee #{@intervention.author} (#{author_firstname} #{author_lastname}) working for customer #{@intervention.customer_id} (#{@customer_company}) on building  #{@intervention.building_id}, battery #{@intervention.battery_id}, column #{@intervention.column_id} and elevator #{@intervention.elevator_id} has dispatched an employee (#{@intervention.employee_id}) to answer the present ticket.
         *** An element with no value after a '#' means no specific element has been selected on the form ***
         Here is a description of the intervention to be made : 
         #{@intervention.rapport}  
         #{added_details}
         "}, 
-        # :submitter_id => @intervention.author,
+        :submitter_id => @intervention.author,
         :type => "problem",
         :priority => "urgent")
 
@@ -149,34 +149,7 @@ class InterventionsController < ApplicationController
       end
     end
   
-    # # PATCH/PUT /interventions/1.json
-    # def update
-    #   respond_to do |format|
-    #     if @intervention.update(intervention_params)
-    #       format.html { redirect_to "/interventions" }
-    #       # format.html { redirect_to quotes_url}
-    #       format.json { render :show, status: :ok, location: @intervention }
-    #     else
-    #       format.html { render :edit }
-    #       format.json { render json: @intervention.errors, status: :unprocessable_entity }
-    #     end
-    #   end
-    # end
-  
-    # # DELETE /interventions/1.json
-    # def destroy
-    #   @intervention.destroy
-    #   respond_to do |format|
-    #     format.html { redirect_to "/interventions" }
-    #     format.json { head :no_content }
-    #   end
-    # end
-     
-    # private
-    #   # Use callbacks to share common setup or constraints between actions.
-    #   def set_intervention
-    #     @intervention = Intervention.find(params[:id])
-    #   end
+   
   
       # Never trust parameters from the scary internet, only allow the white list through.
       def intervention_params
