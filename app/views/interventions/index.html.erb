@@ -1,0 +1,208 @@
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-140314684-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-140314684-1');
+</script>
+
+
+
+<%= form_with(model: @intervention, local: true, url: interventions_path ) do |form| %>    
+    
+    <!-- SLIDE TOP -->
+
+
+    
+
+
+
+        <!-- REVOLUTION SLIDER -->
+
+
+        <!-- /REVOLUTION SLIDER -->
+
+
+        <hr class="m-0" /><!-- 1px line separator -->
+
+
+
+        <!-- CONTACT -->
+        <section id="contact">
+            <div class="container">
+
+                <header class="text-center mb-60-1">
+                    <h2>INTERVENTION</h2>
+                    <p class="lead font-lato">Enter details about your intervention</p>
+                    <hr />
+                </header>
+
+
+                <div class="row">
+
+                    <!-- FORM -->
+                    <div class="col-md-8 col-sm-8">
+
+                        <h3>Intervention details </h3>
+
+                        
+                        <!--
+                            MESSAGES
+                            
+                                How it works?
+                                The form data is posted to php/contact.php where the fields are verified!
+                                php.contact.php will redirect back here and will add a hash to the end of the URL:
+                                    #alert_success 		= email sent
+                                    #alert_failed		= email not sent - internal server error (404 error or SMTP problem)
+                                    #alert_mandatory	= email not sent - required fields empty
+                                    Hashes are handled by assets/js/contact.js
+                                Form data: required to be an array. Example:
+                                    contact[email][required]  WHERE: [email] = field name, [required] = only if this field is required (PHP will check this)
+                                    Also, add `required` to input fields if is a mandatory field. 
+                                    Example: <input required type="email" value="" class="form-control" name="contact[email][required]">
+                                PLEASE NOTE: IF YOU WANT TO ADD OR REMOVE FIELDS (EXCEPT CAPTCHA), JUST EDIT THE HTML CODE, NO NEED TO EDIT php/contact.php or javascript
+                                             ALL FIELDS ARE DETECTED DINAMICALY BY THE PHP
+                                WARNING! Do not change the `email` and `name`!
+                                            contact[name][required] 	- should stay as it is because PHP is using it for AddReplyTo (phpmailer)
+                                            contact[email][required] 	- should stay as it is because PHP is using it for AddReplyTo (phpmailer)
+                        -->
+
+                        <!-- Alert Success -->
+                        <div id="alert_success" class="alert alert-success mb-30">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <strong>Thank You!</strong> Your message successfully sent!
+                        </div><!-- /Alert Success -->
+
+
+                        <!-- Alert Failed -->
+                        <div id="alert_failed" class="alert alert-danger mb-30">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <strong>[SMTP] Error!</strong> Internal server error!
+                        </div><!-- /Alert Failed -->
+
+
+                        <!-- Alert Mandatory -->
+                        <div id="alert_mandatory" class="alert alert-danger mb-30">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <strong>Sorry!</strong> You need to complete all mandatory (*) fields!
+                        </div><!-- /Alert Mandatory -->
+
+<!-------------------------FORM DEBUT------------------------------------------------------>
+
+                        <%# <action="php/contact.php" method="post" enctype="multipart/form-data"> %>
+                            <fieldset>
+                                <input type="hidden" name="action" value="contact_send" />
+
+                            
+                        <%# Employee drop down menu %>
+                        <div class="row" style="margin-left: 1px">
+                                <div class="col-md-4">
+                                        <%= form.label :employee %>
+                                        <%= form.select :employee, options_from_collection_for_select(Employee.all, "id", "first_name",  "last_name"), include_blank: "-None-" %>
+                                    </div>
+                                </div>
+
+
+                            <%# Customers drop down menu  %>  
+                            <div class="row" style="margin-left: 1px">
+                                <div class="col-md-4">
+                                        <%= form.label :customer %>
+                                        <%# <%= form.select :customer, options_from_collection_for_select(Customer.all, "id", "company_name"), include_blank: "-Select customer-" %> 
+                                        <%= form.select(:customer, Customer.all.collect {|p| [p.company_name, p.id]}.sort_by(&:first), {prompt: "-Select Customer-"}, {class: 'form-control'}) %>
+                                        
+                                    </div>
+                                </div>
+                            
+                            <%# Buildings drop down menu  %>        
+                            <div class="building-class">
+                                <div class="col-md-4">
+                                        <%= form.label :building %>
+                                        <%# <%= form.select :building, options_from_collection_for_select(Building.all, "id", "id"), include_blank: "-Building id-" %> 
+                                        <%= form.select(:building, Building.all.collect {|t| [t.id, t.customer_id ]}, {prompt: "id"},  {class: 'form-control'}) %>
+                                    </div>
+                                </div>
+
+                             <%# Batteries drop down menu  %>        
+                            <div class="battery-class">
+                                <div class="col-md-4">
+                                        <%= form.label :battery %>
+                                        <%# <%= form.select :battery, options_from_collection_for_select(Battery.all, "id", "id"), include_blank: "-id-" %>
+                                        <%= form.select(:battery, Battery.all.collect {|b| [b.id, b.building_id ]}, {prompt: "id"}, {class: 'form-control'}) %>
+                                    </div>
+                                </div>
+                            
+                             <%# Columns drop down menu  %>        
+                            <div class="column-class">
+                                <div class="col-md-4">
+                                        <%= form.label :column %>
+                                        <%# <%= form.select :column, options_from_collection_for_select(Column.all, "id", "id"), include_blank: "-id-" %>
+                                        <%= form.select(:column, Column.all.collect {|c| [c.id, c.battery_id ]}, {prompt: "id"}, {class: 'form-control'}) %>
+                                    </div>
+                                </div>
+
+                             <%# Elevators drop down menu  %>        
+                            <div class="elevator-class">
+                                <div class="col-md-4">
+                                        <%= form.label :elevator %>
+                                        <%# <%= form.select :elevator, options_from_collection_for_select(Elevator.all, "id", "id"), include_blank: "-id-" %> 
+                                        <%= form.select(:elevator, Elevator.all.collect {|e| [e.id, e.column_id ]}, {prompt: "id"}, {class: 'form-control'}) %>
+                                    </div>
+                                </div>
+
+                
+
+                        <%# Description field to submit intervention %>
+                        <div class="col-md-12">
+                                <%= form.label :description %>
+                                <%= form.text_area :report, class: 'form-control', rows: '6' %>
+                            </div>
+                        </div>
+                                    
+                                
+                            </fieldset>
+
+
+                    </div>
+                    <!-- /FORM -->
+
+                    <!-- INFO -->
+                    <div class="col-md-4 col-sm-4">
+
+                            <!-- TOTAL / PLACE ORDER -->
+                            <div class="toggle-transparent toggle-bordered-full clearfix">
+                                <div class="toggle active">
+                                    
+                            
+                                        <hr>
+                                    <div class="actions"> 
+                                    <%= form.submit class: 'btn btn-primary btn-lg btn-block fs-15', value: 'Submit', :onclick => "alert('Information about your intervention has been sent to the Rocket Elevators servers !')"%>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- /TOTAL / PLACE ORDER -->
+                                    
+
+                          
+                                
+
+                   
+        </section>
+        <!-- /CONTACT -->
+
+
+
+
+       
+    <%=javascript_include_tag "intervention" %>
+    <!-- /wrapper -->
+
+
+    <!-- SCROLL TO TOP -->
+    <a href="#" id="toTop"></a>
+
+    <% end %>
