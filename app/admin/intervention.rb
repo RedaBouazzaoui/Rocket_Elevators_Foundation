@@ -12,6 +12,8 @@ ActiveAdmin.register Intervention do
       column  :rapport
       column  :resultat
       column  :status
+      Column  :start_intervention
+      Column  :end_intervention
       
       actions
     end
