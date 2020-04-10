@@ -1,6 +1,6 @@
 class InterventionsController < ApplicationController
     #  before_action :set_intervention, only: [:show, :edit, :update, :destroy]
-    # before_action :authenticate_user!
+    before_action :authenticate_employee!
   
     # GET /quotes.json
     def index
