@@ -1,60 +1,34 @@
 # ROCKET ELEVATORS INFORMATION SYSTEM
 
 Ruby On Rails project for RocketElevators.  
-Make the interactive website with the original static website of "Jackie" and link it to a database to store "User" and "Employee" login data and the quote data in separate tables.  
-The website have a backoffice that employee can login to access the data from quote.
 
-###### New Update Week 5 | Odyssey :   March 13rd 2020 ######
-  Expansion of the relational database model.
-  Creation of a decision database (DataWarehouse) with PostGres.
-  Restitution and visualization of the data used for answering the three questions.
-  
-    1. How many contact requests are made per month?
-    
-    2. How many bid solicitations are made per month?
-    
-    3. How many elevators per customer do we have?
+*Intervention Request Form
+The form is for Rocket Elevators employees to enter a new request for intervention :
+
+ url : http://projectrocketelevators.com/interventions
+ 
+*Creating new GET requests in the REST API :
+ 
+url : https://rocketelevatorapirestful.azurewebsites.net
+github : https://github.com/RdaBouazzaoui/Rocket_Elevators_Restful_API_Foundation
+ 
+
+
     
 ## Back Office Admin Logins
-  - admin@example.com , password
-  - test@test , 123123
+- Reda Bouazzaoui  email : reda.bouazzaoui10@gmail.com ,  passeword : 123456
 
 - Mathieu Houde | coach | mathieu.houde@codeboxx.biz | password: 123456
 - Patrick Thibault | coach | tiboclan@gmail.com | password: 123456
 - Philippe Motillon | coach | philippe.motillon@keyrus.ca | password: 123456
-- Khalid Kjado | coach | kdjado@gmail.com | password: 123456
-- Antoine Deblonde | coach | antoine.deblonde@keyrus.ca | password: 123456
-- Ibrahim Mahamane | coach | imahamaneissa@gmail.com | password: 123456
+
+
 
 ## Configuration
   - Ruby version : 2.6.5  
   - Rails version : 5.2.4.1
   - Gem version : 3.1.2
   - Bundler version : 1.17.3
-
-## Link to the video
-   https://youtu.be/k8fnkJH5f4A  (week 5)  
-      -by maria  
-   https://youtu.be/3A9tzJVdl8s  (week 4)  
-      -by maria  
-
-## Collaborators
-  - Maria - Collaborator -maguilar93
-
-  - Jackie - Team Leader -Kamiwackii
-
-  - Reda - Collaborator -RdaBouazzaoui
-
-  - Lou - Collaborator -HelloLou
-
-
-## Specials Acknowledgments
-
-- Afandy -afandyng
-
-- Jorge -jorgechavarriaga
-
-- Kiril -kirilkk9
 
 ## List of required Gems
   actioncable (6.0.2.1, 5.2.4.1)  
