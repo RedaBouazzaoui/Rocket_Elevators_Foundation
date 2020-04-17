@@ -26,14 +26,14 @@ class LeadsController < ApplicationController
     
 
     #render json: @lead #test when submit button form
-    if verify_recaptcha()  && @lead.save
+    if verify_recaptcha(model: @lead )  && @lead.save
 
       ContactsMailer.contact_email(@lead).deliver
       flash[:notice] = "We received your request! "
       redirect_to :index
     else
       flash[:notice] = "Request not succesfull."
-      redirect_to action:"new"
+      redirect_to index_path(anchor: "contact")
     end
   end
 
