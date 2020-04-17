@@ -136,7 +136,7 @@ class InterventionsController < ApplicationController
     #==================================== END Zendesk API session =========================================# 
   
       respond_to do |format|
-        if @intervention.save!
+        if verify_recaptcha() && @intervention.save!
           format.html { redirect_to "/interventions" }
           format.json { render :show, status: :created, location: @intervention }
           p @intervention

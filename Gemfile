@@ -97,8 +97,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 #ibm_watson
 gem "ibm_watson"
-
-
+#recaptcha
+gem "recaptcha", require: "recaptcha/rails"
 
 gem 'twilio-ruby'
 gem 'phonelib'
