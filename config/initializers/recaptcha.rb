@@ -1,5 +1,5 @@
 Recaptcha.configure do |conf|
-conf.site_key = "6LetfuoUAAAAAJh8NVPjnfe6C7Gyxakmd14SZSix"
-conf.secret_key ="6LetfuoUAAAAAJjoSRV_ULgXEW0Wo87kGCWdCVce"
+conf.site_key = ENV["SITE_KEY"]
+conf.secret_key = ENV["SECRET_KEY"]
 
 end

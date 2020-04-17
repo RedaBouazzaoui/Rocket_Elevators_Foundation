@@ -19,7 +19,7 @@ class QuoteController < ApplicationController
     :priority => "urgent")
 
     #render json: @quote #test when submit button form
-    if @quote.save
+    if verify_recaptcha() && @quote.save
       flash[:notice] = "add new quete successfull "
       redirect_to :index
     else
