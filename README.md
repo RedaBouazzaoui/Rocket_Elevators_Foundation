@@ -1,19 +1,5 @@
-# ROCKET ELEVATORS INFORMATION SYSTEM
 
-Ruby On Rails project for RocketElevators.  
-
-*Intervention Request Form
-The form is for Rocket Elevators employees to enter a new request for intervention :
-
- url : http://projectrocketelevators.com/interventions
  
-*Creating new GET requests in the REST API :
- 
-url : https://rocketelevatorapirestful.azurewebsites.net
-github : https://github.com/RdaBouazzaoui/Rocket_Elevators_Restful_API_Foundation
- 
-
-
     
 ## Back Office Admin Logins
 - Reda Bouazzaoui  email : reda.bouazzaoui10@gmail.com ,  passeword : 123456
