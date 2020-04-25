@@ -1,3 +1,23 @@
+
+**Week 11 - Elevators Media Streamer **
+Quality and TDD
+
+For testing:
+
+    File : ./spec/ElevatorMedia/streamer_spec.rb
+    Test command: rspec ./spec/ElevatorMedia/streamer_spec.rb
+
+Unit tests:
+
+    File: ./spec/Controllers/Quotes_controller_spec.rb Test command: rspec ./spec/Controllers/Quotes_controller_spec.rb
+
+    File: ./spec/Controllers/Interventions_controller_spec.rb Test command: rspec ./spec/Controllers/Interventions_controller_spec.rb
+
+    File: ./spec/Controllers/Leads_controller_spec.rb Test command: rspec ./spec/Controllers/Leads_controller_spec.rb
+
+    File: ./spec/adminpanel_spec.rb Test command: rspec ./spec/adminpanel_spec.rb
+
+TDD extra language repo: JS + JEST https://github.com/yobek-lab/Elevators_Streamer_JEST.git
 Week# 10: Security Assessment
 1. A2:2017 - Broken Authentication
 What is it?
